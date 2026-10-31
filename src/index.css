@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-[#030405] bg-[#030405];
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom keyframes for the luminous blue waves & pulses */
+@keyframes waveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+@keyframes shimmerGlow {
+  0%, 100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Seamless infinite horizontal marquee animation for tech stack logos */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-wave-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(54, 134, 196, 0.45) 0%, rgba(22, 86, 182, 0.3) 35%, rgba(10, 36, 96, 0.15) 60%, transparent 80%);
+  animation: floatSlow 8s ease-in-out infinite, shimmerGlow 6s ease-in-out infinite;
+}
+
+.animate-electric-bar {
+  background: linear-gradient(90deg, #0A2460 0%, #1656B6 20%, #3686C4 45%, #8EB6E8 50%, #3686C4 55%, #1656B6 80%, #0A2460 100%);
+  background-size: 200% 100%;
+  animation: waveGradient 6s linear infinite;
+}
+
+/* Subtle breathing & pulse animation for tutor portrait on hover */
+@keyframes tutorGentlePulse {
+  0%, 100% {
+    transform: scale(1.08) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.12) rotate(0.8deg);
+  }
+}
+
+.tutor-hover-animate:hover {
+  animation: tutorGentlePulse 3.5s ease-in-out infinite;
+}
