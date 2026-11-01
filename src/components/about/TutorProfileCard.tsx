@@ -103,10 +103,6 @@ export const TutorProfileCard: React.FC<TutorProfileCardProps> = ({ onOpenEnquir
               />
             </div>
           </div>
-
-          <span className="text-[11px] text-[#626262] mt-3 md:hidden font-medium text-center">
-            {isInCenter1 ? '✨ In Focus (Color Active)' : 'Scroll into center for full color'}
-          </span>
         </div>
 
         {/* Bio & Credibility */}
@@ -221,10 +217,6 @@ export const TutorProfileCard: React.FC<TutorProfileCardProps> = ({ onOpenEnquir
               />
             </div>
           </div>
-
-          <span className="text-[11px] text-[#626262] mt-3 md:hidden font-medium text-center">
-            {isInCenter2 ? '✨ In Focus (Color Active)' : 'Scroll into center for full color'}
-          </span>
         </div>
 
         {/* Bio & Credibility */}

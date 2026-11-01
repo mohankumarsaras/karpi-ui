@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, User, Shield } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface NavbarProps {
   onOpenEnquiry: () => void;
@@ -9,6 +10,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenEnquiry }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, isAuthenticated, isRookie, isTutor } = useAuth();
 
   const navLinks = [
     { name: 'COURSES', path: '/courses' },
@@ -52,25 +54,60 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnquiry }) => {
             ))}
           </nav>
 
-          {/* Right Action: Clean pill button */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* Right Action: Clean Portal button + Pill action */}
+          <div className="hidden lg:flex items-center gap-3">
+            {isAuthenticated ? (
+              <Link
+                to={isTutor ? '/tutor/dashboard' : '/rookie/dashboard'}
+                className="text-[11px] font-bold tracking-wider px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all flex items-center gap-1.5"
+              >
+                {isTutor ? <Shield className="w-3.5 h-3.5 text-[#3686C4]" /> : <User className="w-3.5 h-3.5 text-[#3686C4]" />}
+                <span>{isTutor ? 'TUTOR PORTAL' : 'MY DASHBOARD'}</span>
+              </Link>
+            ) : (
+              <Link
+                to="/rookie/login"
+                className="text-[11px] font-bold tracking-wider px-3.5 py-1.5 rounded-full text-[#A0B6D6] hover:text-white hover:bg-white/5 transition-all flex items-center gap-1.5"
+              >
+                <User className="w-3.5 h-3.5 text-slate-400" />
+                <span>STUDENT LOGIN</span>
+              </Link>
+            )}
+
             <button
               onClick={onOpenEnquiry}
               className="text-[11px] font-bold tracking-wider px-4 py-2 rounded-full bg-white text-[#030405] hover:bg-[#3686C4] hover:text-white transition-all shadow-sm flex items-center gap-1.5"
             >
-              ENROL NOW
+              <span>ENROL NOW</span>
               <ArrowUpRight className="w-3 h-3" />
             </button>
           </div>
 
           {/* Mobile button & toggle */}
           <div className="flex lg:hidden items-center gap-2 sm:gap-3">
+            {isAuthenticated ? (
+              <Link
+                to={isTutor ? '/tutor/dashboard' : '/rookie/dashboard'}
+                className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-white"
+              >
+                PORTAL
+              </Link>
+            ) : (
+              <Link
+                to="/rookie/login"
+                className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full text-slate-300 border border-[#1E232B]"
+              >
+                LOGIN
+              </Link>
+            )}
+
             <button
               onClick={onOpenEnquiry}
               className="text-[10px] font-bold tracking-wider px-3 py-1.5 rounded-full bg-white text-[#030405] active:scale-95 transition-transform"
             >
               ENROL
             </button>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-[#94A3B8] hover:text-white focus:outline-none rounded-lg hover:bg-[#101318]"
@@ -99,13 +136,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnquiry }) => {
               {link.name}
             </Link>
           ))}
-          <div className="pt-2 border-t border-[#1E232B]/60">
+
+          <div className="pt-2 border-t border-[#1E232B]/60 space-y-2">
+            <Link
+              to={isAuthenticated ? (isTutor ? '/tutor/dashboard' : '/rookie/dashboard') : '/rookie/login'}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full text-center py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs font-bold tracking-wider uppercase"
+            >
+              {isAuthenticated ? 'Open Portal Workspace' : 'Student Sign In (Google)'}
+            </Link>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenEnquiry();
               }}
-              className="w-full text-center py-2.5 rounded-lg bg-[#3686C4] text-white text-xs font-bold tracking-wider uppercase mt-1"
+              className="w-full text-center py-2.5 rounded-lg bg-[#3686C4] text-white text-xs font-bold tracking-wider uppercase"
             >
               ENROL NOW
             </button>
